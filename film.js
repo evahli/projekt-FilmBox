@@ -152,4 +152,11 @@ const hodnoceni = (number) => {
   });
 };
 
-hvezdaElements.addEventListener("click", () => {})
+hvezdaElements.forEach((hvezda) => {
+	hvezda.addEventListener("click", (event) => {
+		const pocetHvezd = event.target.textContent;
+		hodnoceni(pocetHvezd);
+	})
+})
+	
+
