@@ -113,12 +113,10 @@ const plakat = document.querySelector('img');
 plakat.src = detailFilmu.plakat.url;
 
 const cardTitle = document.querySelector('.card-title');
-cardTitle.textContent = detailFilmu.nazev
+cardTitle.textContent = detailFilmu.nazev;
 
-const cardText = document.querySelector('.card-text')
-cardText.textContent = detailFilmu.popis
-
-
+const cardText = document.querySelector('.card-text');
+cardText.textContent = detailFilmu.popis;
 
 const premieraElement = document.querySelector('#premiera');
 const datumPremiery = dayjs(detailFilmu.premiera).format('D. M. YYYY');
@@ -126,16 +124,6 @@ const dnesniDatum = dayjs();
 const dnuOdPremieryCalc = dayjs(detailFilmu.premiera).diff(dnesniDatum, 'days');
 const dnuOdPremiery = Math.abs(dnuOdPremieryCalc);
 premieraElement.innerHTML = `Premiéra: <strong>${datumPremiery}</strong> Od premiery ubehlo ${dnuOdPremiery} dni.`;
-
-/* 
-V souboru film.js si přichystejte pomocnou funkci pro zvýraznění určitého počtu hvězdiček.
-Ve funkci počítejte s jedním vstupním parametrem, číslem od jedné do pěti.
-Ve funkci projděte cyklem všechny prvky se třídou fa-star.
-Zvýrazněným hvězdičkám odeberte třídu far a přidejte fas. Ostatním obráceně. Zvýrazněné nechť jsou ty, které jsou v pořadí menší nebo rovny číslu ze vstupu funkce. Pokud tedy funkci zavoláte například s číslem tři, první tři hvězdičky budou mít třídu fas a zbylé dvě budou mít far.
-Funkci vyzkoušejte zavolat s různými hodnotami. Zkušební volání ale v kódu nenechávejte.
-Smyčkou přidejte všem hvězdičkám, prvkům se třídou fa-star posluchač události na kliknutí.
-Po kliknutí zjistěte, na kterou hvězdičku uživatel kliknul. Každá hvězdička má ve svém textovém obsahu číslo pořadí.
-Číslo využijte jako parametr funkce předchystané podle instrukcí výše.*/
 
 const hvezdaElements = document.querySelectorAll('.fa-star');
 
@@ -152,11 +140,32 @@ const hodnoceni = (number) => {
   });
 };
 
-hvezdaElements.forEach((hvezda) => {
-	hvezda.addEventListener("click", (event) => {
-		const pocetHvezd = event.target.textContent;
-		hodnoceni(pocetHvezd);
-	})
-})
-	
+let pocetHvezdKlik = 0;
 
+hvezdaElements.forEach((hvezda) => {
+  hvezda.addEventListener('mouseenter', (event) => {
+    const pocetHvezd = event.target.textContent;
+    hodnoceni(pocetHvezd);
+  });
+  hvezda.addEventListener('click', (event) => {
+    pocetHvezdKlik = event.target.textContent;
+    hodnoceni(pocetHvezdKlik);
+  });
+  hvezda.addEventListener('mouseleave', (event) => hodnoceni(pocetHvezdKlik));
+});
+
+const poznamkaElement = document.querySelector('#note-form');
+
+const handleSubmit = (event) => {
+  event.preventDefault();
+  const poznamkaInput = document.querySelector('#message-input');
+	if (poznamkaInput)
+};
+
+
+/*V souboru film.js pomocí document.querySelector najděte prvek s id note-form.
+Při pokusu o odeslání tohoto formuláře zamezte výchozí chování prohlížeče.
+Ověřte, že uživatel do textového pole, prvku s id message-input něco napsal. Pokud ne, přidejte prvku třídu is-invalid, která ho zvýrazní červeně.
+Pokud uživatel něco napsal, ověřte, že souhlasil s podmínkami, že zaškrtl políčko s id terms-checkbox. Pokud nezaškrtl, přidejte políčku třídu is-invalid
+Pokud uživatel splnil obě podmínky z kroků výše, nahraďte HTML obsah formuláře za odstavec <p class="card-text">…</p> s textem z textového pole.
+*/
