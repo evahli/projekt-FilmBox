@@ -156,14 +156,25 @@ hvezdaElements.forEach((hvezda) => {
 
 const poznamkaElement = document.querySelector('#note-form');
 
-const handleSubmit = (event) => {
+poznamkaElement.addEventListener('submit', (event) => {
   event.preventDefault();
   const poznamkaInput = document.querySelector('#message-input');
-	if (poznamkaInput)
-};
+  if (poznamkaInput.value === '') {
+    poznamkaInput.classList.add('is-invalid');
+  }
+  const termCheck = document.querySelector('#terms-checkbox');
+  if (termCheck.checked === false) {
+    termCheck.classList.add('is-invalid');
+  }
+  if (poznamkaInput.value !== '' && termCheck.checked) {
+    poznamkaElement.innerHTML = `<p class="card-text">${poznamkaInput.value}</p>`;
+  }
+});
 
 
-/*V souboru film.js pomocí document.querySelector najděte prvek s id note-form.
+
+/*
+V souboru film.js pomocí document.querySelector najděte prvek s id note-form.
 Při pokusu o odeslání tohoto formuláře zamezte výchozí chování prohlížeče.
 Ověřte, že uživatel do textového pole, prvku s id message-input něco napsal. Pokud ne, přidejte prvku třídu is-invalid, která ho zvýrazní červeně.
 Pokud uživatel něco napsal, ověřte, že souhlasil s podmínkami, že zaškrtl políčko s id terms-checkbox. Pokud nezaškrtl, přidejte políčku třídu is-invalid
